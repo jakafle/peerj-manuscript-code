@@ -1,0 +1,554 @@
+%% Submissions for peer-review must enable line-numbering 
+%% using the lineno option in the \documentclass command.
+%% Preprints and camera-ready submissions do not need 
+%% line numbers, and should have this option removed.
+%%
+%% Please note that the line numbering option requires
+%% version 1.1 or newer of the wlpeerj.cls file, and
+%% the corresponding author info requires v1.2
+
+\documentclass[fleqn,10pt,lineno]{wlpeerj} % for journal submissions
+% \documentclass[fleqn,10pt]{wlpeerj} % for preprint submissions
+
+\title{Human Influence on Predator-Prey Relationship: Red Panda and Snow Leopard}
+
+\author[1]{Jagat Kafle}
+\corrauthor[1]{Jagat Kafle}{jagatkafle72@gmail.com}
+\affil[1]{Pokhara, Nepal}
+% \keywords{Keyword1, Keyword2, Keyword3}
+
+\begin{abstract}
+ This paper is a mathematical model based upon the human influence on the predator-prey relationship between Red Panda and Snow Leopard, which are the major species in the mountain ecosystem. It explores if these species get extinct in a certain area due to imbalance in their interaction. First, simple model of the species is discussed with no interaction between the species. Interactive model is then introduced to simulate their population when they interact with each other. The human influence is then introduced to the interactive model to observe if the species get extinct. The data in this paper are approximated for a certain area based upon the population density and habitat of the two species. All the models are simulated in python programs using Euler's method. 
+\end{abstract}
+
+\begin{document}
+
+\flushbottom
+\maketitle
+\thispagestyle{empty}
+\section*{List of Variables}
+
+\begin{description}
+\item[$u(t)$] : Population of Red Panda at time t
+\item[$v(t)$] : Population of Snow Leopard at time t
+\item[$t$] : time, in months
+\item[$\dfrac{du}{dt}$] : Change in population of Red Panda with time
+\item[$\dfrac{dv}{dt}$] : Change in population of Snow Leopard with time
+\item[$k$] : Carrying capacity of the land area for a given population
+\item[$\alpha$] : Population increase rate of Red Panda [per month]
+\item[$\delta$] : Population decrease rate of Snow Leopard [per month]
+\item[$\beta$] : Interaction constant of Red Panda and Snow Leopard [per               month]
+\item[$\gamma$] : Interaction constant of Red Panda and Snow Leopard [per              month]
+
+\item[$\sigma$] : Decrease in Red Panda population per month due to Human             Influence
+\item[$\theta$] : Decrease in Snow Leopard population per month due to                Human Influence
+\end{description}
+
+\section*{Introduction}
+Red Panda (\textit{Ailurus fulgens}) are native to the Himalayas and Southern China. Snow Leopard (\textit{Panthera uncia})  share the similar habitat, ranging from the Eastern Himalayas to Western China. These two species share a common habitat in China, Bhutan, Nepal, and India. Snow Leopard is one of the primary predators of Red Panda. The snow leopard contributes to the red panda decreasing populations because they are prey to them. Red Pandas are listed as endangered and Snow Leopard are listed as vulnerable by IUCN. The decreasing population of Red Panda has put a risk in food-supply to Snow Leopards, effecting in their population. However, the decrease in their population is contributed much by human activities like poaching, hunting and climate change. These species have been major organisms in the mountain ecosystem, so it is necessary to simulate how these species' population change over with time and how human influences effect them. 
+
+The purpose of this research paper is to find how these species interact with each other with and without human influence. The population of both the species is simulated over time to see their behaviour without human influence and with human influence. How will the population of these two species behave over time when they are killed by human effects? Will they get extinct? This problem will be addressed by the research. The data used in this paper are specifically for Red Panda and Snow Leopard as they have been approximated from the total population of these two species for a particular area with regard to population density, birth and death rate and habitat.
+
+The calculations required for this will be explained and assembled in a Python program. Several graphs will plot out the wanted information. Even though this program is a large simplification of reality, leaving many factors(e.g. initial population size in specific area is roughly approximated) unnoted, the outcome of the program resembles the actual population interaction between the two species along with environment factors. After varying the input data, including initial population and decrement in population due to human effects, an ideal model for the population species will be deduced and discussed.
+
+In this research, first, methods is discussed with the explanation of data used in preparing the models. In Chapter 1, the simple model of Red Panda and Snow Leopard is discussed. In Chapter 2, the mathematical model of the two populations is simulated taking their interaction in concern. In Chapter 3, human influence on the interactive model is studied to find how they behave and if they get extinct. Then, results, discussion and conclusions of the research are presented. 
+
+\section*{Methods}
+Here, the data used throughout the mathematical models are discussed. The raw data are taken through the internet (wikipedia and other resources cited in the reference section). Through the raw data, the constants required in this research are approximated.
+
+For the Red Panda, taking its passiveness in mating in concern, the value of $\alpha$ is calculated. A female Red Panda gives around 4 births in around 16 months. So, a female gives birth to $\dfrac{4}{16}$ Red Panda in a month. The male and female population is considered equal. So, the birth rate becomes:
+Birth rate = $\dfrac{4}{16*2}$ = $0.125$ per month
+Life span of Red Panda is around $10$ - $12$ years. 
+1 Red Panda lives around $144$ months.
+Death rate = $\dfrac{1}{144}$ = $0.0069444$ per month.\\ 
+So,  $\alpha$ = Birth rate - Death rate\\
+        $= (0.125 - 0.0069444)$ per month\\
+        $= 0.1180556$ per month \\
+        $= 0.118$ per month
+
+For the Snow Leopard, the assumption is made that its reproductive rate decreases as well as death rate increases as it can't prey upon Red Panda. So,from our assumption, a female Snow Leopard gives around 2 birth in 70 months.
+A female gives birth to $\dfrac{2}{70}$ Snow Leopard in a month.
+The male and female population is considered equal.
+So, the birth rate becomes:
+Birth rate = $\dfrac{2}{70*2}$ = 0.0142857 per month
+1 Snow Leopard lives around 12 months with this assumption.
+Death rate = $\dfrac{1}{12}$ = 0.0833333 per month.\\
+So,  $\delta$  = Death rate - Birth rate\\
+      $= (0.0833333 - 0.0142857)$ per month\\
+      $= 0.0690476$ per month\\
+      $= 0.069$ per month
+
+For the carrying capacity population of the land area for Red Panda population, its value is assumed to be $300$ on the basis of available small land-area, feeding habit of Red Panda, etc. Red Panda feeds upon Bamboos the most and prefers solitude, this carrying capacity is kept for our model with land area chosen
+as $50$ km square.  
+
+For our model, $40$ Red Pandas and $5$ Snow Leopards are chosen as initial population size in the area of $50$ km square. This small population size is chosen given that both are endangered species and have small population all over the world thus making their population density less.
+
+Given the small population size of both species over the $50$ km square area, their interaction is obviously less. The assumption of 1\% of total Red Panda population is eaten by a Snow Leopard per month is made. 
+So, $\beta$ =  1\% per month
+      = 0.01 per month.
+
+Again, the assumption is made that for every 5 Red Pandas eaten, Snow Leopard population gets benefited by one.
+So, $\gamma$ =  $\dfrac{0.01}{5}$ per month
+      = 0.002 per month. 
+      
+Thus, with these methodology to determine the values of constants used throughout this research, the models are discussed.
+
+\section{Simple Model of Red Panda and Snow Leopard}
+\label{chapter1}
+In this simple model of two population species, the change in population of the two species will be explored without taking their interaction terms in concern. This simple model is idealized to study the behaviour of population change in the species.
+
+First, the theory behind the simple model is discussed. With the help of python program, the mathematical model is simulated using Euler's method. Conclusion is drawn on the basis of the nature of the curves obtained by simulation.
+
+\subsection{Theory Behind the Simple Model}
+\label{section: Theory Behind the Simple Model}
+Here, the mathematical theory involved in the model is discussed. The two population species are independent of each-other as the interactive constants, $\beta$ and $\gamma$ are both zero for this model.
+
+For the Red Panda, the prey model is chosen. Its population increases with time because of its higher birth rate and lower death rate. If $\alpha$ be the population increase rate of Red Panda, $k$ be the carrying capacity of the land-area and $u(t)$ be the population of Red Panda at time $t$ months, the rate of population change per month is given by:
+\begin{equation}
+\label{eq:2.1}
+    \frac{du}{dt} = \alpha u(t) (1-\frac{u(t)}{k})
+\end{equation}
+For the Snow Leopard, the predator model is chosen. Its population declines with time because of the assumption that it can't prey upon the Pandas, so its death rate is more than birth rate. If $\delta$ be the population decrease rate of Snow Leopard and $v(t)$ be the population of Snow Leopard at time $t$ months, the rate of population change per month is given by:
+\begin{equation}
+\label{eq:2.2}
+    \frac{dv}{dt} = -\delta v(t)
+\end{equation}
+
+\subsection{Euler's method for differential equations}
+To implement the simulation of the differential equations, Euler's method is used.
+For the general differential equation
+$$\dfrac{dy}{dt} = f(t,y),$$
+the $n$-th step of Euler's method is given by
+$$y((n+1)\Delta t) = y(n\Delta t) + \Delta t\,f(t,y(n\Delta t)),$$
+in which $\Delta t$ is the time-step.
+
+\subsection{Simple Model of Red Panda}
+\label{section: Simple Model of Red Panda}
+The population of Red Panda changes as per equation \ref{eq:2.1}.
+
+\begin{equation*}
+    \frac{du}{dt} = \alpha u(t) (1-\frac{u(t)}{k})
+\end{equation*}
+
+For this model, the value of $k$ is chosen to be $300$ in the area of $50$ km square. The value of $\alpha$ is assumed $0.118$, regarding the passiveness of Red Panda in mating. So, the equation now becomes:
+
+\begin{equation*}
+    \frac{du}{dt} = 0.118 u(t) (1-\frac{u(t)}{300})
+\end{equation*}
+
+This differential equation is modelled with the help of a python program using Euler's method.
+
+\subsubsection{Euler's Method and Graphs}
+To implement Euler's method, an appropriate step-size must be chosen. For our model, we choose the step size, $\Delta t$ as $\frac{1}{4}$ as it produced a smooth graph with less error. We choose the initial population, $u(0)$ of Red Panda to be $40$.
+On simulating the curve using a Python program for this initial population and time-step, the following curve (Figure \ref{figure: Photo RedPanda Graph}) is obtained.
+
+    \begin{figure}[htbp] 
+	\centering
+	\includegraphics[width=0.5\textwidth]{redpanda.jpg}
+	\caption{\textbf{Population of Red Panda with time}
+	The x-axis represents the time period in months and y-axis represents the population of Red Panda. $u(t)$ represents Red Panda population and $t$ represents time in months.}
+	\label{figure: Photo RedPanda Graph}
+    \end{figure}
+
+\subsubsection{Equilibrium Points}
+For the equation of Red Panda, equilibrium point can be calculated be setting $\dfrac{du}{dt} = 0$.
+So,
+        $$0.118 u(t) (1-\frac{u(t)}{300}) = 0$$
+Solving for $u(t)$, either $u(t) = 0$, or $u(t) = 300$.
+
+This equation has two equilibrium points, $0$ and $300$. We draw direction fields to show how the solutions behave above or below the equilibrium points.
+    \begin{figure}[htbp] 
+	\centering
+	\includegraphics[width=0.5\textwidth]{direction-field-panda.png}
+	\caption{\textbf{Direction field for population of Red Panda}
+	The x-axis represents the time period in months and y-axis represents the population of Red Panda. As shown by the direction fields, population of Red Panda is directed towards the equilibrium point $300$.}
+	\label{figure: Photo RedPanda Direction Field}
+    \end{figure}
+    
+As shown in the direction field plot (Figure \ref{figure: Photo RedPanda Direction Field}), the population of Red Panda increases towards the equilibrium point $300$ if it is greater than zero. If the population is greater than $300$, the population decreases towards this equilibrium point and becomes stable once it reaches $300$. So, $300$ is the stable point equilibrium. For the equilibrium point zero, the population remains this value if initial population is equal to this value.
+
+\subsection{Simple Model of Snow Leopard}
+\label{section: Simple Model of Snow Leopard} 
+The population of Snow Leopard changes as per equation \ref{eq:2.2}.
+\begin{equation*}
+    \frac{dv}{dt} = -\delta v(t)
+\end{equation*}
+For this model, the value of $\delta$ is assumed $0.069$ . So, the equation now becomes:
+\begin{equation*}
+    \frac{dv}{dt} = -0.069 v(t)
+\end{equation*}
+\subsubsection{Euler's Method and Graphs}
+To implement Euler's method, an appropriate step-size must be chosen. For our model, we choose the step size, $\Delta t$ as $\frac{1}{4}$ as it produced a smooth graph with less error. We choose the initial population, $v(0)$ of Snow Leopard as $5$.
+On simulating the curve using a Python program for this initial population and time-step, the following curve (Figure \ref{figure: Photo Snow Leopard Graph}) is obtained.
+    \begin{figure}[htbp] 
+	\centering
+	\includegraphics[width=0.5\textwidth]{snowleopard.jpg}
+	\caption{\textbf{Population of Snow Leopard with time}
+	The x-axis represents the time period in months and y-axis represents the population of Snow Leopard. $u(t)$ represents the Snow Leopard population and $t$ represents time in months.}
+	\label{figure: Photo Snow Leopard Graph}
+    \end{figure}
+\subsubsection{Equilibrium Points}
+For the equation of Snow Leopard, equilibrium point can be calculated be setting $\dfrac{dv}{dt} = 0$.
+So,
+        $$-0.069 v(t) = 0$$
+Solving for $v(t)$, $v(t) = 0$. This equation has an equilibrium point, $0$. We draw direction field (Figure \ref{figure: Photo Snow Leopard Direction field}) to show how solutions behave at points other than equilibrium points.
+    \begin{figure}[htbp] 
+	\centering
+    \includegraphics[width=0.5\textwidth]{direction-field-leopard.png}
+	\caption{\textbf{Direction field for the population of Snow Leopard}
+	The x-axis represents the time period in months and y-axis represents the population of Snow Leopard. As shown by the direction fields, population of Snow Leopard is directed towards the equilibrium point $0$.}
+	\label{figure: Photo Snow Leopard Direction field}
+    \end{figure}
+\subsection{Conclusion}
+\label{section: Conclusion Chapter 1}
+In this simple model, the population of Red Panda and Snow Leopard was simulated without taking the interactive constant. On simulating the model, it is found the Red Panda population increases with time and becomes constant after it reaches the equilibrium point of $300$, while the Snow Leopard population decreases with time and eventually reaches to zero.
+
+\section{Interactive Model of Red Panda and Snow Leopard} 
+\label{chapter2}
+In this interactive model of two population species, the population change of the two species will be explored taking their predator-prey relation in concern. This model discusses how the population of both the species behave when they interact with each other.
+First, the theory behind the interactive model is discussed. With the help of python program, the mathematical model is simulated using Euler's method. Conclusion is drawn on the basis of the nature of the curves obtained by simulation.
+
+\subsection{Theory Behind the Interactive Model}
+In Chapter \ref{chapter1}, we discussed the separate population model of Red Panda and Snow Leopard, taking $\beta = 0$ and $\gamma = 0$. In this model, the interactive constants $\beta$ and $\gamma$ are taken to be non-zero values and the model is simulated using Euler's method for systems. The interactive constant $\beta$ causes the decrement in population of Red Panda as they are prey to Snow Leopard. The interactive constant $\gamma$ increases the population of Snow Leopard as they feed upon the Red Pandas.
+
+For the Red Panda, the interactive factor decreases its population. So, the equation for Red Panda population per time will be:
+
+\begin{equation*}
+    \frac{du}{dt} = \alpha u(t) (1-\frac{u(t)}{k}) - \beta u(t)v(t)
+\end{equation*}
+
+This can be written as:
+
+\begin{equation}
+\label{eq:3.1}
+    \frac{du}{dt} = \alpha u(t) (1-\frac{u(t)}{k} - \frac{\beta v(t)}{\alpha}) 
+\end{equation}
+
+For the Snow Leopard, the interactive factor increases its population. So, the equation for Snow Leopard population per time will be:
+
+\begin{equation*}
+    \frac{dv}{dt} = -\delta v(t) + \gamma v(t)u(t)
+\end{equation*}
+
+This equation can be written as:
+
+\begin{equation}
+\label{eq:3.2}
+    \frac{dv}{dt} = -\delta v(t)(1 - \frac{\gamma u(t)}{\delta})
+\end{equation}
+
+These two equations can be represented as a system of differential equations:
+
+\begin{equation}
+\label{eq:3.3}
+\left\{   
+\begin{array}{rcll}
+\dfrac{du}{dt} & = & \alpha u(t) (1-\dfrac{u(t)}{k} - \dfrac{\beta v(t)}{\alpha}) , \\
+\\
+\dfrac{dv}{dt} & = & -\delta v(t)(1 - \dfrac{\gamma u(t)}{\delta}) \\
+\end{array}
+\right. 
+\end{equation}
+
+\subsection{Euler's method for System of Differential equations}
+For a system of differential equations, Euler's method works as for a single differential equation.
+For a system of differential equation, we can write them in the form of vectors.
+So, if $$\vec{X} = \left[\begin{array}{cc}
+      u(t)  \\
+      v(t)
+\end{array}\right]
+$$
+be a vector representing a system of functions, $u(t)$ and $v(t)$. Then, the differential equation for the system can be written as:
+$$
+\frac{d\vec{X}}{dt} = \left[\begin{array}{cc}
+     \dfrac{du}{dt}  \\
+     \dfrac{dv}{dt}
+\end{array}
+\right]
+$$
+
+The vector on the right is a function of $u$, $v$ and $t$. Because $u$ and $v$ are the part of vector function $\vec{X}$, these two functions on the right are also the functions of $\vec{X}$. So, the general form of this vector can be written as:
+$$
+\frac{d\vec{X}}{dt} = \left[\begin{array}{cc}
+     f_1\left(t,\vec{X}\right)  \\
+     f_2\left(t,\vec{X}\right)
+\end{array}
+\right]
+$$
+
+Because both functions depend on $t$ and $X$, we can now even define a vector function $\vec{F}$, of $t$ and $\vec{X}$ which has as first component the function $f_1$ and as second component the function $f_2$ as:
+$$\dfrac{d\vec{X}}{dt} = \vec{F}\left(t,\vec{X}\right),$$
+
+For this general differential equation, the $n$-th step of Euler's Method is given by
+$$\vec{X}((n+1)\Delta t) = \vec{X}(n\Delta t) + \Delta t\,\vec{F}\left(n\Delta t,\vec{X}\left(n\Delta t\right)\right),$$
+in which $\Delta t$ is the time-step.
+
+\subsection{Simulation of the Model}
+
+The values of $\alpha$, $\delta$ and $k$ are kept the same from the simple model of Red Panda and Snow Leopard (Chapter \ref{chapter2}). The interactive constant $\beta$ for Red Panda population is set to $0.01$ and $\gamma$ for the Snow Leopard population is set to $0.002$. The initial population for both the species are kept the same: $u(0) = 40$ and $v(0) = 5$. On simulating the curve using a Python program for these initial populations and time-step, the following curve and trajectories are obtained.
+
+\begin{equation}
+\label{eq:3.4}
+\left\{   
+\begin{array}{rcll} 
+\dfrac{du}{dt} & = & 0.118 u(t) (1-\dfrac{u(t)}{300} - \dfrac{0.01 v(t)}{0.118}) , & u(0) = 40 \\ 
+\\  
+\dfrac{dv}{dt} & = & -0.069 v(t)(1 - \dfrac{0.002 u(t)}{0.069}), & v(0) = 5 
+\end{array}
+\right. 
+\end{equation}
+
+On simulating the model for these initial populations, the population of both the species change for around $500$ months (Figure \ref{figure: Photo Interactive-model Graph}) and tend to stabilize on approaching the equilibrium point, which is discussed further in the subsection \ref{eqpoints}.
+
+
+    \begin{figure}[htbp] 
+	\centering
+	\includegraphics[width=0.5\textwidth]{panda-leopard.jpg}
+	\caption{\textbf{Population of two species with time}
+	The x-axis represents the time in months and y-axis represents the population of Red Panda and Snow Leopard. $u(t)$ and $v(t)$ are Red Panda and Snow Leopard population respectively.}
+	\label{figure: Photo Interactive-model Graph}
+    \end{figure}
+    
+\subsection{Equilibrium Points}
+\label{eqpoints}
+For the system of differential equations,
+
+\begin{equation}
+\label{eq:3.5}
+\left\{  
+\begin{array}{rcll}
+\dfrac{du}{dt} & = & 0.118 u(t) (1-\dfrac{u(t)}{300} - \dfrac{0.01 v(t)}{0.118}) , \\ 
+\\  
+\dfrac{dv}{dt} & = & -0.069 v(t)(1 - \dfrac{0.002 u(t)}{0.069}) \\
+\end{array}
+\right. 
+\end{equation}
+
+    \begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.5\textwidth]{trajectory.jpg}
+	\caption{\textbf{Trajectory of the two population species} 
+	The x-axis represents the Red Panda population and y-axis represents Snow Leopard population. $u(t)$ and $v(t)$ are Red Panda and Snow Leopard population respectively.}
+	\label{figure: Photo Trajectory Graph}
+    \end{figure}
+
+The equilibrium points can be found by setting $\dfrac{du}{dt} = 0$ and $\dfrac{dv}{dt} = 0$. Solving for the equilibrium points, the following equilibrium points are obtained for the system of these two differential equations: $(0, 0), (300, 0), (34.5, 10.44)$ with the ordered pair representing the equilibrium population of Red Panda and Snow Leopard respectively.
+    
+    \begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.5\textwidth]{trajectories.jpg}
+	\caption{\textbf{Simulation for varied initial population.} 
+	The x-axis represents the Red Panda population and the y-axis represents the Snow Leopard population. $u(t)$ and $v(t)$ are Red Panda and Snow Leopard population respectively.}
+	\label{figure: Photo trajectories}
+    \end{figure}
+
+To see how solutions behave near the equilibrium points, different trajectories with varied initial populations are simulated. The trajectories obtained for the simulation is shown in Figure \ref{figure: Photo trajectories}.
+
+On analyzing the Figure \ref{figure: Photo trajectories}, the population value of both the species are clustered near the equilibrium point $(34.5, 10.44)$. So, whatever initial population values are taken, they will reach to this equilibrium point after some time period and the population stabilizes as shown in Figure \ref{figure: Photo Interactive-model Graph}, \ref{figure: Photo Trajectory Graph} and \ref{figure: Photo trajectories}.\\\\
+
+\subsection{Conclusion}
+\label{section: Conclusion Chapter 2}
+In this interactive model, the population of Red Panda and Snow Leopard was simulated taking the interactive constants $\beta$ and $\gamma$. On simulating the model, it is observed that population of both species keeps on increasing and decreasing for some months and eventually approach towards the equilibrium point $(34.5, 10.44)$ and stabilize thereafter. Thus these two species maintain balance in their population.  
+
+\section{Human Effect on Interactive Modelling}
+\label{chapter3}
+In this chapter, the human effect on interactive modelling is discussed to give the report a more realistic approach. The death of Snow Leopards and Red Pandas per month is taken into account to simulate how these populations behave on the influence of human activities.
+
+\subsection{Theory Behind the Human Influence Model}
+In Chapter \ref{chapter2}, the interactive model between Red Panda and Snow Leopard was discussed. In this model, the decrement in population of both the species is taken and simulated using Euler's method to observe how their population changes with time.
+The constants $\sigma$ and $\theta$ represent the decrease in population of Red Panda and Snow Leopard per month respectively. 
+
+So, for our model, the equation for Red Panda population per time will be:
+\begin{equation*}
+    \frac{du}{dt} = \alpha u(t) (1-\frac{u(t)}{k}) - \beta u(t)v(t) - \sigma
+\end{equation*}
+This can be written as:
+\begin{equation}
+\label{eq:4.1}
+    \frac{du}{dt} = \alpha u(t) (1-\frac{u(t)}{k} - \frac{\beta v(t)}{\alpha} - \frac{\sigma}{\alpha u(t)})
+\end{equation}
+The equation for Snow Leopard population per time will be:
+\begin{equation*}
+    \frac{dv}{dt} = -\delta v(t) + \gamma v(t)u(t) - \theta
+\end{equation*}
+This equation can be written as:
+\begin{equation}
+\label{eq:4.2}
+    \frac{dv}{dt} = -\delta v(t)(1 - \frac{\gamma u(t)}{\delta} + \frac{\theta}{\delta v(t)})
+\end{equation}
+These two equations can be represented as a system of differential equations:
+\begin{equation}
+\label{eq:4.3}
+\left\{   
+\begin{array}{ll}  
+  \dfrac{du}{dt} = \alpha u(t) (1-\dfrac{u(t)}{k} - \dfrac{\beta v(t)}{\alpha} - \dfrac{\sigma}{\alpha u(t)}), \\  
+\\  
+ \dfrac{dv}{dt} = -\delta v(t)(1 - \dfrac{\gamma u(t)}{\delta} + \dfrac{\theta}{\delta v(t)}) \\
+\end{array}
+\right. 
+\end{equation}
+\subsection{Simulation of the Model}
+In this model, we specify the value of $\sigma$ and $\theta$ and observe how the populations behave over different values of $\theta$ and $\alpha$. The values of $\alpha$, $\delta$, $k$, $\beta$ and $\gamma$ are kept the same from the previous models of Red Panda and Snow Leopard (Chapter \ref{chapter2} and \ref{chapter3}). The initial set of populations is also the same: $u(0) = 40$ and $v(0) = 5$.
+Thus the system of differential equations for this model is:
+    \begin{equation}
+    \label{eq:4.4}
+\left\{    
+\begin{array}{ll}  
+  \dfrac{du}{dt} = 0.118 u(t) (1-\dfrac{u(t)}{300} - \dfrac{0.01 v(t)}{0.118} - \dfrac{\sigma}{0.118 u(t)}), \\ 
+\\  
+ \dfrac{dv}{dt} = -0.069 v(t)(1 - \dfrac{0.002 u(t)}{0.069} + \dfrac{\theta}{0.069 v(t)}) \\
+\end{array}
+\right. 
+\end{equation}
+\subsubsection{Model for $\sigma$ = 0}
+For $\sigma = 0$, the system of differential equations \ref{eq:4.4} can be re-defined as:
+   \begin{equation}
+\left\{   
+\begin{array}{ll}  
+  \dfrac{du}{dt} = 0.118 u(t) (1-\dfrac{u(t)}{300} - \dfrac{0.01 v(t)}{0.118}), \\ 
+\\  
+ \dfrac{dv}{dt} = -0.069 v(t)(1 - \dfrac{0.002 u(t)}{0.069} + \dfrac{\theta}{0.069 v(t)}) \\
+\end{array}
+\right. 
+\end{equation}
+    \begin{figure}[htbp]  
+	\centering
+	\includegraphics[width=0.5\textwidth]{human-0-1.jpg}
+	\caption{\textbf{Population of both species for $\sigma = 0$ and $\theta = 1$.} 
+	The x-axis represents the time period in months and the y-axis represents the Red Panda and Snow Leopard population. $u(t)$ and $v(t)$ are Red Panda and Snow Leopard population respectively.}
+	\label{figure: Photo Snow Leopard Human-1 }
+    \end{figure}
+    \begin{figure}[htbp] 
+	\centering
+	\includegraphics[width=0.5\textwidth]{human-0-2.jpg}
+	\caption{\textbf{Population of both species for $\sigma = 0$ and $\theta = 2$.} 
+	The x-axis represents the time period in months and the y-axis represents the Red Panda and Snow Leopard population. $u(t)$ and $v(t)$ are Red Panda and Snow Leopard population respectively.}
+	\label{figure: Photo Snow Leopard Human-2 }
+    \end{figure} 
+\paragraph{Behaviour of the model:}
+In this model, the Snow Leopard population decreases to zero within some months (Figure \ref{figure: Photo Snow Leopard Human-1 } and \ref{figure: Photo Snow Leopard Human-2 }). The more the value of $\theta$, more rapidly the population of Snow Leopard falls to zero. When the population of Snow Leopard reaches to zero, the Red Panda population behaves like in section \ref{section: Simple Model of Red Panda}, thus it reaches its equilibrium point $300$ after some time period and remains constant throughout. So, for this model, the Snow Leopard population gets extinct while the Red Panda population behaves as in the simple model to reach its equilibrium point and remains constant thereafter. 
+\subsubsection{Model for $\theta$ = 0}
+For $\theta = 0$, the system of differential equations \ref{eq:4.4} can be re-defined as:
+ \begin{equation}
+ \label{eq:4.6}
+\left\{   
+\begin{array}{ll} 
+  \dfrac{du}{dt} = 0.118 u(t) (1-\dfrac{u(t)}{300} - \dfrac{0.01 v(t)}{0.118} - \dfrac{\sigma}{0.118 u(t)}), \\ 
+\\  
+ \dfrac{dv}{dt} = -0.069 v(t)(1 - \dfrac{0.002 u(t)}{0.069}) \\
+\end{array}
+\right.
+\end{equation}
+    \begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.5\textwidth]{human-1-0.jpg}
+	\caption{\textbf{Population of both species for $\sigma = 1$ and $\theta = 0$.} 
+	The x-axis represents the time period in months and the y-axis represents the Red Panda and Snow Leopard population. $u(t)$ and $v(t)$ are Red Panda and Snow Leopard population respectively.}
+	\label{figure: Photo Red Panda Human-1 }
+    \end{figure}
+    \begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.5\textwidth]{human-2-0.jpg}
+	\caption{\textbf{Population of both species for $\sigma = 2$ and $\theta = 0$.} 
+	The x-axis represents the time period in months and the y-axis represents the Red Panda and Snow Leopard population. $u(t)$ and $v(t)$ are Red Panda and Snow Leopard population respectively.}
+	\label{figure: Photo Red Panda Human-2 }
+    \end{figure}
+\paragraph{Behaviour of the model:}
+In this model, the population of both the species, Red Panda and Snow Leopard, reaches to zero after some months (Figure \ref{figure: Photo Red Panda Human-1 } and \ref{figure: Photo Red Panda Human-2 }). On simulation, for $\sigma < 2$, the population of both the species keeps increasing and decreasing for around some time period and then approaches to zero (Figure \ref{figure: Photo Red Panda Human-1 }). For $\sigma \geq 2$, the Red Panda population decreases while the Snow Leopard population increases slightly at first and then decreases. The population of Red Panda reaches zero first and then the Snow Leopard population behaves as in section \ref{section: Simple Model of Snow Leopard} to reach zero. So, for this model, both the species get extinct.
+
+\subsubsection{Model for non-zero $\sigma$ and $\theta$}
+For nonzero $\sigma$ and $\theta$, the system of differential equations is: 
+\begin{equation}
+\label{eq:4.7}
+\left\{   
+\begin{array}{ll}  
+  \dfrac{du}{dt} = 0.118 u(t) (1-\dfrac{u(t)}{300} - \dfrac{0.01 v(t)}{0.118} - \dfrac{\sigma}{0.118 u(t)}), \\ 
+\\ 
+ \dfrac{dv}{dt} = -0.069 v(t)(1 - \dfrac{0.002 u(t)}{0.069} + \dfrac{\theta}{0.069 v(t)}) 
+\end{array}
+\right.
+\end{equation}
+  
+    \begin{figure}[htbp]  
+	\centering
+	\includegraphics[width=0.5\textwidth]{human-1-1.jpg}
+	\caption{\textbf{Population of both species for $\sigma = 1$ and $\theta = 1$.} 
+	The x-axis represents the time period in months and the y-axis represents the Red Panda and Snow Leopard population. $u(t)$ and $v(t)$ are Red Panda and Snow Leopard population respectively.}
+	\label{figure: Photo Red Panda Human-1,1 }
+    \end{figure}
+    \begin{figure}[htbp]  
+	\centering
+	\includegraphics[width=0.5\textwidth]{human-3-1.jpg}
+	\caption{\textbf{Population of both species for $\sigma = 3$ and $\theta = 1$.} 
+	The x-axis represents the time period in months and the y-axis represents the Red Panda and Snow Leopard population. $u(t)$ and $v(t)$ are Red Panda and Snow Leopard population respectively.}
+	\label{figure: Photo Red Panda Human-3,1 }
+    \end{figure}
+    \begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.5\textwidth]{human-4-1.jpg}
+	\caption{\textbf{Population of both species for $\sigma = 4$ and $\theta = 1$.} 
+	The x-axis represents the time period in months and the y-axis represents the Red Panda and Snow Leopard population. $u(t)$ and $v(t)$ are Red Panda and Snow Leopard population respectively.}
+	\label{figure: Photo Red Panda Human-4,1 }
+    \end{figure} 
+  
+\paragraph{Behaviour of the model:} 
+In this model, the Snow Leopard population decreases to zero within some months (Figure \ref{figure: Photo Red Panda Human-1,1 }, \ref{figure: Photo Red Panda Human-3,1 } and \ref{figure: Photo Red Panda Human-4,1 }). However, the Red Panda population behaves according to the value of $\sigma$. If $\sigma \leq 3.7$, the population of Red Panda rises and remains constant on reaching its equilibrium point which is less than $300$ (Figure \ref{figure: Photo Red Panda Human-1,1 } and \ref{figure: Photo Red Panda Human-3,1 }). The steepness of the Red Panda population is determined by the value of $\sigma$, the more the value of sigma, less positive the slope is. If $\sigma > 3.7$, the population of Red Panda also decreases and eventually reaches zero after few months, with the curve having negative slope (Figure \ref{figure: Photo Red Panda Human-4,1 }). Thus, in this model, the Snow Leopard population gets extinct whatever values $\sigma$ and $\theta$ take. For the Red Panda, its population gets extinct if $\sigma > 3.7$ per month.
+
+\subsection{Conclusion}
+In this human influence model, the behaviour of the interactive model between Red Panda and Snow Leopard was studied by including the decrement in their population due to human influence. The population decrement constants per month $\sigma$ and $\theta$ were introduced for Red Panda and Snow Leopard respectively. 
+
+On simulation of the model, different behaviour were observed for different values of $\sigma$ and $\theta$. For $\sigma = 0$, the Snow Leopard population gets extinct while the Red Panda population behaves like its simple model to reach its equilibrium point and remain constant. For $\theta = 0$, both the species get extinct. For non-zero $\sigma$ and $\theta$, more variant behaviour was observed. For $\sigma \leq 3.7$, Snow Leopard population gets extinct while the Red Panda population reaches to its equilibrium population (depends upon $\sigma$) which is less than equilibrium point of simple model, $300$. For $\sigma > 3.7$, both the species get extinct.
+
+\section*{Results}
+In this paper, the simple model discussed how population of the two species behaved without interaction. The Red Panda population increased to reach its equilibrium point $300$ and remained constant throughout while the Snow Leopard population got extinct. In the interactive model, the population of both species kept on changing for some months and eventually approached towards the equilibrium point $(34.5, 10.44)$ for Red Panda and Snow Leopard population respectively and stabilized thereafter. Thus these two species maintained balance in their population. For human-influence model, different behaviour were observed for different values of $\sigma$ and $\theta$. For $\sigma = 0$, the Snow Leopard population got extinct while the Red Panda population reached its equilibrium point $300$ and remained constant. For $\theta = 0$, both the species got extinct. For non-zero $\sigma$ and $\theta$, more variant behaviour was observed. For $\sigma \leq 3.7$, Snow Leopard population got extinct while the Red Panda population reached its equilibrium population which was less than equilibrium point of simple model, $300$. For $\sigma > 3.7$, both the species got extinct. Thus, human influence caused imbalance in their population interaction.
+
+\section*{Discussion}
+From the models studied in this paper, human effects are closely related in causing the change in population interaction of Red Panda and Snow Leopard. These population species are likely to get extinct if their population get decreased by human killing and consequences of other human activities (like climate change, destroying habitat, etc.) So, the main responsibility is to conserve these species, \textit{Ailurus fulgens} and \textit{Panthera uncia} which have already been enlisted as endangered and vulnerable by the IUCN respectively. The world scenario of these species is the same to some extent as shown in the report taking regard of their population density, habitat and interaction. It is necessary to conserve these species through collective efforts from global level - national parks, wildlife reserves, governments, wildlife organizations and local people themselves can play a vital role in helping these species from getting extinct. 
+
+\section*{Conclusions}
+Human influence on the population species causes imbalance in their population interaction and may result in their extinction too. The results obtained from the models in this report show how two population species, Red Panda (\textit{Ailurus fulgens}) and Snow Leopard (\textit{Panthera uncia}) interact with each other and how human effects can lead to their imbalanced interaction and extinction. The results drawn from this research for a small set of population can be inferred to a large population group, assuming the two species are interacting only with each other. Human-influence in their interaction changes their population-interaction behaviour and species may get extinct. To gain more realistic view of population interaction, more population species, interaction factors and feasible environmental factors can be added and simulated to find their behaviour. 
+
+
+
+\section*{Acknowledgments}
+
+I would like to express my deepest appreciation to all those who provided insight and expertise that greatly assisted to complete this research paper. A special gratitude I give to my brother Mr.Sagar Kafle [Physics Department, Tribhuvan University] for helping me assess the resources and giving me support and guidance to complete the research duly. I am grateful to my friend Mr.Aayush Phuyal [Mathematics Department, Budhanilkantha School], who helped me assemble the paper and motivated me to make it better with his feedbacks. I am thankful to and fortunate enough to get constant encouragement, support and guidance from my teachers, Mr.Rajendra Kumar Shrestha [Mathematics Department, SOS Gandaki], Mr.Khagendra Baral [Mathematics Department, SOS Gandaki], and Mr. Prabhas Poudel [Mathematics Department, SOS Gandaki] and all teaching staffs of TU-Delft Online Learning who helped me successfully complete this paper.
+
+
+\begin{thebibliography}{9}
+\bibliographystyle{plain}
+
+\bibitem{fish-and-scallop}
+Vacchi, M., Cattaneo-Vietti, R., Chiantore, M., \& Dalu, M. (2000). Predator–prey relationship between the nototheniid fish Trematomus bernacchii and the Antarctic scallop Adamussium colbecki at Terra Nova Bay (Ross Sea). Antarctic Science, 12(1), 64-68. doi:10.1017/S0954102000000092
+\\
+\bibitem{larvae and oikopleura}
+Shelbourne, J. (1962). A predator-prey size relationship for Plaice larvae feeding on Oikopleura. Journal of the Marine Biological Association of the United Kingdom, 42(2), 243-252. doi:10.1017/S0025315400001326
+\\
+\bibitem{snow leopards in Nepal}
+Jackson, R. (1979). Snow Leopards in Nepal. Oryx, 15(2), 191-195. doi:10.1017/S0030605300024327
+\\
+\bibitem{redpanda}
+Wei, F., Feng, Z., Wang, Z., Zhou, A., \& Hu, J. (1999). Use of the nutrients in bamboo by the red panda (Ailurus fulgens). Journal of Zoology, 248(4), 535-541.
+\\
+\bibitem{copepod and pelagic tunicate}
+Heron, A. (1973). A Specialized Predator-Prey Relationship Between the Copepod Sapphirina Angusta and the Pelagic Tunicate Thalia Democratica. Journal of the Marine Biological Association of the United Kingdom, 53(2), 429-435. doi:10.1017/S0025315400022372
+\\
+\bibitem{predator-prey interactions}
+Neal, D. (2018). Predator–Prey Interactions. In Introduction to Population Biology (pp. 297-324). Cambridge: Cambridge University Press. doi:10.1017/9781139107976.020
+\\
+\bibitem{Live Science}
+Bradford, Alina (2016). Facts About Red Pandas. LiveScience, Purch. Available at:
+\textit{https://www.livescience.com/57312-red-pandas.html}
+\\
+\bibitem{a-z animals}
+Red Panda.a-z animals (2018), Available at: \textit{https://a-z-animals.com/animals/red-panda/}
+\\
+\bibitem{Red Panda}
+Red Panda, Available at: \textit{https://en.wikipedia.org/wiki/Red\_panda}
+\\
+\bibitem{Snow Leopard}
+Snow Leopard, Available at: \textit{https://en.wikipedia.org/wiki/Snow\_leopard}
+
+\end{thebibliography}
+
+\end{document}
